@@ -8,8 +8,7 @@ import type { RecommendRequest } from './_lib/promptBuilder'
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000
 
 function setCORS(res: VercelResponse): void {
-  const origin = process.env.FRONTEND_URL ?? 'http://localhost:5173'
-  res.setHeader('Access-Control-Allow-Origin', origin)
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 }
@@ -26,12 +25,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   setCORS(res)
   if (req.method === 'OPTIONS') { res.status(200).end(); return }
   if (req.method !== 'POST') { res.status(405).json({ error: 'method_not_allowed' }); return }
-  if (!isValidRequest(req.body)) { res.status(400).json({ error: 'invalid_request', message: 'userId and freeText required' }); return }
+  if (!isValidRequest(req.body)) {
+    res.status(400).json({ error: 'invalid_request', body: JSON.stringify(req.body) })
+    return
+  }
   const request = req.body as RecommendRequest
   try {
     await connectDB()
     const history = await Session.find({ userId: request.userId }).sort({ createdAt: -1 }).limit(5).lean()
-    const userPrompt = buildPrompt(request, history)
+    const userPrompt = buildPrompt(request, history as any)
     const geminiResponse = await getRecommendations(userPrompt)
     const enriched = await enrichWithTMDB(geminiResponse.recommendations)
     const session = await Session.create({
@@ -43,7 +45,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     res.status(200).json({ sessionId: String(session._id), recommendations: enriched })
   } catch (err: unknown) {
     const error = err as Error & { status?: number }
-    if (error.status === 429) { res.status(429).json({ error: 'rate_limit', message: 'Too many requests' }); return }
-    res.status(500).json({ error: 'internal_error' })
+    console.error('RECOMMEND ERROR:', error.message, error.stack)
+    if (error.status === 429) { res.status(429).json({ error: 'rate_limit' }); return }
+    res.status(500).json({ error: 'internal_error', message: error.message })
   }
-}
+  }
