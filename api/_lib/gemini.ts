@@ -34,7 +34,7 @@ export async function getRecommendations(userPrompt: string, retries = 2): Promi
         systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
         generationConfig: {
           responseMimeType: 'application/json',
-          maxOutputTokens: 2048,
+          maxOutputTokens: 8192,
           temperature: 0.8,
         },
       }),
