@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   darkMode: 'class',
@@ -6,32 +5,46 @@ module.exports = {
     extend: {
       colors: {
         cinema: {
-          bg:           '#0F0F0F',
-          surface:      '#1A1A1A',
-          elevated:     '#262626',
-          border:       '#2D2D2D',
-          muted:        '#6B6B6B',
-          text:         '#E8E8E8',
-          accent:       '#F59E0B',
-          'accent-dim': '#D97706',
-          success:      '#10B981',
-          danger:       '#EF4444',
-        },
+          bg:        '#080808',
+          surface:   '#100E0C',
+          card:      '#131110',
+          elevated:  '#1C1916',
+          border:    '#252220',
+          'border-gold': 'rgba(200,169,110,0.15)',
+          muted:     '#6B6560',
+          subtle:    '#9C9590',
+          text:      '#E2DDD6',
+          gold:      '#C8A96E',
+          'gold-light': '#EDD9A3',
+          'gold-dim': '#9A7E4F',
+          success:   '#6B9E7A',
+          danger:    '#C47A6B',
+        }
       },
       fontFamily: {
-        display: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans:    ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+        sans:    ['"DM Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        mono:    ['"DM Mono"', '"Fira Code"', 'monospace'],
       },
       borderRadius: {
-        card: '12px',
-        chip: '999px',
+        card: '3px',
+        chip: '2px',
       },
       boxShadow: {
-        card:        '0 2px 8px rgba(0,0,0,0.4)',
-        'card-hover':'0 8px 24px rgba(0,0,0,0.6)',
-        poster:      '0 4px 20px rgba(0,0,0,0.8)',
+        'card':       '0 1px 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,169,110,0.06)',
+        'card-hover': '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,169,110,0.15)',
+        'poster':     '4px 0 24px rgba(0,0,0,0.8)',
+        'gold-glow':  '0 0 30px rgba(200,169,110,0.2)',
+        'btn':        '0 2px 8px rgba(200,169,110,0.3)',
       },
-    },
+      animation: {
+        'card-enter': 'card-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'fade-up':    'fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'float':      'float 4s ease-in-out infinite',
+        'shimmer':    'shimmer 2s linear infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+      },
+    }
   },
   plugins: [],
 }
