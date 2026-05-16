@@ -151,28 +151,6 @@ No user accounts. Personalization is built on a UUID stored in `localStorage`.
 
 Every recommendation session is saved to MongoDB with a 30-day TTL (auto-expiry keeps the free tier comfortable). When you make a new request, the last 3 sessions are injected into the Gemini prompt as context — so the AI avoids repeating suggestions and understands your evolving taste.
 
----
-
-## Resume Bullets
-
-```
-AI Movie Recommendation Engine  |  React · Node.js · MongoDB · Gemini API · Vercel
-
-• Architected end-to-end LLM-powered recommendation system — natural language inputs
-  produce tailored picks with per-film reasoning via Google Gemini Flash API
-
-• Engineered serverless backend (Vercel Functions, Node.js 20 + TypeScript) with
-  structured JSON output parsing, exponential backoff on rate limits, and MongoDB
-  Atlas for persistent cross-session preference profiling
-
-• Implemented context-aware prompt engineering — injects last 3 user sessions as
-  LLM context for personalization without requiring user accounts
-
-• Built CI/CD pipeline with GitHub Actions (ESLint, tsc, Vitest) and Vercel GitHub
-  integration for zero-config continuous deployment
-
-• Architected for $0/month: Vercel Hobby (compute + CDN), MongoDB Atlas M0 (512MB
-  free forever), Gemini Flash (1,500 req/day free), TMDB (unlimited free)
 ```
 
 ---
